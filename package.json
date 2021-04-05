@@ -1,0 +1,8 @@
+{
+  "name": "one_more_try",
+  "version": "1.0.0",
+  "dependencies": {
+    "@salesforce/apex": "0.0.12",
+    "lwc": "^1.17.6"
+  }
+}
