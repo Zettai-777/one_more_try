@@ -163,6 +163,7 @@
     </fields>
     <fields>
         <fullName>Manager__c</fullName>
+        <businessStatus>Active</businessStatus>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
         <label>Manager</label>

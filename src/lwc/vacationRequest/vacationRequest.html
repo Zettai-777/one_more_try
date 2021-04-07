@@ -1,17 +1,35 @@
 <template>
+
+    <lightning-card title="User Details in LWC" icon-name="action:user">
+        <template if:true={user}>
+            Username : {user.Username}
+            Manager : {user.ManagerId}
+            Name : {user.Name}
+            Email : {user.Email}
+            Id : {user.Id}
+        </template>
+    </lightning-card>
+
+
     <lightning-card title="Try to show requests list" icon-name="custom:custom63">
         <div class="slds-m-around_medium">
 <!--            <p class="slds-m-bottom_small">-->
 <!--                <lightning-button label="Load requests" onclick={handleLoad}></lightning-button>-->
 <!--            </p>-->
 
+            {userName}
+
             <!--     Добавление нового запроса     -->
+            <div class="slds-float_left">
+                <lightning-input class="slds-p-left_xx-large" type="checkbox" label="View only my"></lightning-input>
+            </div>
             <lightning-button
                     variant="brand" label="Add Request"
                     title="Primary action" onclick={openModal}
                     class="slds-m-left_x-small">
             </lightning-button>
             <template if:true={isModalOpen}>
+
                 <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-content-id-1"
                          aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
                     <div class="slds-modal__container">
@@ -70,7 +88,7 @@
 
             <template if:true={requests}>
                 <template for:each={requests} for:item="request">
-                    <p key={request.Id}>{request.WorkingDays__c} {request.RequestType__c} {request.Manager__c} {request.Status__c}</p>
+                    <p key={request.Id}>|{request.Name}__{request.WorkingDays__c}__{request.RequestType__c}__{request.Manager__c}|</p>
                 </template>
             </template>
 <!--            <template if:true={error}>-->

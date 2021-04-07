@@ -20,42 +20,42 @@
   </component>
   <component name="RetrieveModel">
     <selectedComponentNames>
-      <SelectedComponentNamesPersistedState type="HOME_PAGE_COMPONENT" selectAll="true" />
-      <SelectedComponentNamesPersistedState type="GLOBAL_VALUE_SET" selectAll="true" />
+      <SelectedComponentNamesPersistedState type="CUSTOM_APPLICATION" selectAll="true" />
+      <SelectedComponentNamesPersistedState type="APEX_TEST_SUITE" selectAll="true" />
+      <SelectedComponentNamesPersistedState type="CUSTOM_PERMISSION" selectAll="true" />
+      <SelectedComponentNamesPersistedState type="CALL_CENTER" selectAll="true" />
+      <SelectedComponentNamesPersistedState type="REMOTE_SITE_SETTINGS" selectAll="true" />
+      <SelectedComponentNamesPersistedState type="EXTERNAL_DATA_SOURCE" selectAll="true" />
+      <SelectedComponentNamesPersistedState type="LAYOUT" selectAll="true" />
+      <SelectedComponentNamesPersistedState type="WORKFLOW" selectAll="true" />
+      <SelectedComponentNamesPersistedState type="NETWORK" selectAll="true" />
+      <SelectedComponentNamesPersistedState type="REPORT_TYPE" selectAll="true" />
+      <SelectedComponentNamesPersistedState type="LIGHTNING_WEB_COMPONENT" selectAll="true" />
+      <SelectedComponentNamesPersistedState type="ASSIGNMENT_RULES" selectAll="true" />
+      <SelectedComponentNamesPersistedState type="APEX_COMPONENT" selectAll="true" />
+      <SelectedComponentNamesPersistedState type="APPROVAL_PROCESS" selectAll="true" />
       <SelectedComponentNamesPersistedState type="FLOW" selectAll="true" />
+      <SelectedComponentNamesPersistedState type="PROFILE" selectAll="true" />
+      <SelectedComponentNamesPersistedState type="HOME_PAGE_COMPONENT" selectAll="true" />
+      <SelectedComponentNamesPersistedState type="HOME_PAGE_LAYOUT" selectAll="true" />
       <SelectedComponentNamesPersistedState type="INSTALLED_PACKAGE" selectAll="true" />
       <SelectedComponentNamesPersistedState type="POST_TEMPLATE" selectAll="true" />
-      <SelectedComponentNamesPersistedState type="APEX_COMPONENT" selectAll="true" />
-      <SelectedComponentNamesPersistedState type="NETWORK" selectAll="true" />
-      <SelectedComponentNamesPersistedState type="HOME_PAGE_LAYOUT" selectAll="true" />
-      <SelectedComponentNamesPersistedState type="LAYOUT" selectAll="true" />
-      <SelectedComponentNamesPersistedState type="ASSIGNMENT_RULES" selectAll="true" />
-      <SelectedComponentNamesPersistedState type="CALL_CENTER" selectAll="true" />
-      <SelectedComponentNamesPersistedState type="CUSTOM_APPLICATION" selectAll="true" />
-      <SelectedComponentNamesPersistedState type="CUSTOM_OBJECT" selectAll="true" />
-      <SelectedComponentNamesPersistedState type="REPORT" selectAll="true" />
-      <SelectedComponentNamesPersistedState type="PROFILE" selectAll="true" />
-      <SelectedComponentNamesPersistedState type="APEX_PAGE" selectAll="true" />
-      <SelectedComponentNamesPersistedState type="APPROVAL_PROCESS" selectAll="true" />
-      <SelectedComponentNamesPersistedState type="TRANSLATIONS" selectAll="true" />
-      <SelectedComponentNamesPersistedState type="LIGHTNING_WEB_COMPONENT" selectAll="true" />
-      <SelectedComponentNamesPersistedState type="WORKFLOW" selectAll="true" />
-      <SelectedComponentNamesPersistedState type="SETTINGS" selectAll="true" />
-      <SelectedComponentNamesPersistedState type="CUSTOM_PERMISSION" selectAll="true" />
-      <SelectedComponentNamesPersistedState type="APEX_TRIGGER" selectAll="true" />
-      <SelectedComponentNamesPersistedState type="LIGHTNING_BUNDLE" selectAll="true" />
       <SelectedComponentNamesPersistedState type="CUSTOM_LABELS" selectAll="true" />
-      <SelectedComponentNamesPersistedState type="APEX_CLASS" selectAll="true" />
+      <SelectedComponentNamesPersistedState type="APEX_PAGE" selectAll="true" />
+      <SelectedComponentNamesPersistedState type="LIGHTNING_BUNDLE" selectAll="true" />
+      <SelectedComponentNamesPersistedState type="TRANSLATIONS" selectAll="true" />
+      <SelectedComponentNamesPersistedState type="STANDARD_VALUE_SET" selectAll="true" />
+      <SelectedComponentNamesPersistedState type="REPORT" selectAll="true" />
       <SelectedComponentNamesPersistedState type="CUSTOM_METADATA" selectAll="true" />
       <SelectedComponentNamesPersistedState type="CUSTOM_TAB" selectAll="true" />
-      <SelectedComponentNamesPersistedState type="APEX_TEST_SUITE" selectAll="true" />
-      <SelectedComponentNamesPersistedState type="CUSTOM_OBJECT_TRANSLATION" selectAll="true" />
-      <SelectedComponentNamesPersistedState type="REPORT_TYPE" selectAll="true" />
-      <SelectedComponentNamesPersistedState type="EXTERNAL_DATA_SOURCE" selectAll="true" />
-      <SelectedComponentNamesPersistedState type="GLOBAL_VALUE_SET_TRANSLATION" selectAll="true" />
-      <SelectedComponentNamesPersistedState type="REMOTE_SITE_SETTINGS" selectAll="true" />
-      <SelectedComponentNamesPersistedState type="STANDARD_VALUE_SET" selectAll="true" />
+      <SelectedComponentNamesPersistedState type="SETTINGS" selectAll="true" />
       <SelectedComponentNamesPersistedState type="STATIC_RESOURCE" selectAll="true" />
+      <SelectedComponentNamesPersistedState type="CUSTOM_OBJECT_TRANSLATION" selectAll="true" />
+      <SelectedComponentNamesPersistedState type="APEX_CLASS" selectAll="true" />
+      <SelectedComponentNamesPersistedState type="CUSTOM_OBJECT" selectAll="true" />
+      <SelectedComponentNamesPersistedState type="GLOBAL_VALUE_SET" selectAll="true" />
+      <SelectedComponentNamesPersistedState type="GLOBAL_VALUE_SET_TRANSLATION" selectAll="true" />
+      <SelectedComponentNamesPersistedState type="APEX_TRIGGER" selectAll="true" />
     </selectedComponentNames>
     <componentTreeState>
       <RetrieveComponentTreeNodePersistedState componentType="ApexClass" isChecked="true" isMajor="true" />

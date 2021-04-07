@@ -1,20 +1,41 @@
-import { LightningElement, track, api } from 'lwc';
+import { LightningElement, track, api, wire } from 'lwc';
 import getRequestList from '@salesforce/apex/VacationRequestController.getRequestList';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+
+import getUserDetails  from '@salesforce/apex/UserDetails.getUserDetails';
+import Id from '@salesforce/user/Id';
+
+import getFields from '@salesforce/apex/VacationRequestController.getRequestList';
 import USER_ManagerId from '@salesforce/schema/User';
 // import Vacation_Request_Manager__c from '@salesforce/schema/Vacation_Request_c'
 export default class VacationRequest extends LightningElement {
 
-    @api requests;
-    @track error;
     // @track _greeting;
     // @track columns;
 
+
+    userId = Id;
+    @track user;
+    @track error;
+    @wire(getUserDetails, {
+        recId: '$userId'
+    })
+    wiredUser({error,data}) {
+        if (data) {
+            this.user = data;
+
+        } else if (error) {
+
+            this.error = error;
+
+        }
+    }
 
     //постоянное обновление информации на страничке
     connectedCallback() {
         this.handleLoad();
     }
+
 
     //уведомление о пустом пользователе
     // @api recordId;
@@ -49,6 +70,13 @@ export default class VacationRequest extends LightningElement {
         );
     }
 
+
+    //checkbox
+    flag;
+    handleCheckBox(event){
+        let checkbox = this.template.querySelector('[data-id="checkbox"]')
+        checkbox[0].checked = event.target.checked;
+    }
 
     // columns = [
     //     { label: 'First Name', fieldName: 'FirstName' },
@@ -86,6 +114,8 @@ export default class VacationRequest extends LightningElement {
     // }
 
 
+    @api requests;
+    @track error;
     //Обработка результатов по получению списка request
     handleLoad(){
         getRequestList()
