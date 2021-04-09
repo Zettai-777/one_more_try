@@ -253,6 +253,14 @@
     <label>Vacation Request</label>
     <listViews>
         <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>OBJECT_ID</columns>
+        <columns>RequestType__c</columns>
+        <columns>StartDate__c</columns>
+        <columns>EndDate__c</columns>
+        <columns>Manager__c</columns>
+        <columns>WorkingDays__c</columns>
+        <columns>Status__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
     </listViews>

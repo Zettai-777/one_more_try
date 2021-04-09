@@ -1,8 +1,12 @@
-import { LightningElement, track, api, wire } from 'lwc';
+import {LightningElement, track, api, wire} from 'lwc';
 import getRequestList from '@salesforce/apex/VacationRequestController.getRequestList';
-import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
-import getUserDetails  from '@salesforce/apex/UserDetails.getUserDetails';
+import {deleteRecord} from 'lightning/uiRecordApi';
+import {ShowToastEvent} from 'lightning/platformShowToastEvent';
+
+import deleteRequest from '@salesforce/apex/VacationRequestController.deleteRequest';
+import getUserDetails from '@salesforce/apex/UserDetails.getUserDetails';
+import getManagerInformation from '@salesforce/apex/ManagerDetails.getManagerInformation';
 import Id from '@salesforce/user/Id';
 
 import getFields from '@salesforce/apex/VacationRequestController.getRequestList';
@@ -17,23 +21,50 @@ export default class VacationRequest extends LightningElement {
     userId = Id;
     @track user;
     @track error;
+
     @wire(getUserDetails, {
         recId: '$userId'
     })
-    wiredUser({error,data}) {
+
+    //информация о текущем пользователе
+    wiredUser({error, data}) {
         if (data) {
             this.user = data;
-
         } else if (error) {
-
             this.error = error;
-
         }
     }
 
     //постоянное обновление информации на страничке
     connectedCallback() {
         this.handleLoad();
+    }
+
+
+    @api requests;
+    // @track error;
+    // Обработка результатов по получению списка request
+    handleLoad() {
+        getRequestList()
+            .then(result => {
+                this.requests = result;
+            })
+            .catch(error => {
+                this.error = error;
+            });
+    }
+
+    @track manager
+    @wire(getManagerInformation, {
+        recMId: '$user.ManagerId'
+    })
+
+    wiredManger({error, data}) {
+        if (data) {
+            this.manager = data;
+        } else if (error) {
+            this.error = error;
+        }
     }
 
 
@@ -44,23 +75,23 @@ export default class VacationRequest extends LightningElement {
     // @wire(getRecord, { recordId: '$recordId', fields: [USER_ManagerId]})
     // record;
 
-    manager= USER_ManagerId;
+    // manager= USER_ManagerId;
     // manager= null;
-    title='Toast';
-    message='Can not define User information';
-    variant= 'submit';
+    title = 'Toast';
+    message = 'Can not define User information';
+    variant = 'submit';
 
-    handleError(){
+    handleError() {
         this.showToast(this.title, this.message, this.variant);
     }
 
-    managerCheck(){
-        if(this.manager == null){
+    managerCheck() {
+        if (this.manager == null) {
             this.showToast(this.title, this.message, this.variant);
         }
     }
 
-    showToast(title, message, variant){
+    showToast(title, message, variant) {
         this.dispatchEvent(
             new ShowToastEvent({
                 title: title,
@@ -72,10 +103,33 @@ export default class VacationRequest extends LightningElement {
 
 
     //checkbox
-    flag;
-    handleCheckBox(event){
-        let checkbox = this.template.querySelector('[data-id="checkbox"]')
-        checkbox[0].checked = event.target.checked;
+    @track flag
+    @track myVacations = true;
+
+    handleCheckBox(event) {
+        this.flag = event.target.checked;
+        if (this.flag) {
+            // this.myVacations=true;
+            this.checkEqualsOfCurUserIdAndCreatedId()
+        } else {
+            this.myVacations = 1;
+        }
+        // this.myVacations = event.target.checked;
+
+        // let checkbox = this.template.querySelector('[data-id="checkbox"]')
+        // checkbox[0].checked = event.target.checked;
+    }
+
+    checkEqualsOfCurUserIdAndCreatedId() {
+        for (let request of this.requests) {
+            // alert(request.CreatedById + this.userId);
+            if (this.user.Id !== request.CreatedById) {
+                this.myVacations = null;
+                break;
+            } else {
+                this.myVacations = true;
+            }
+        }
     }
 
     // columns = [
@@ -93,16 +147,35 @@ export default class VacationRequest extends LightningElement {
     // }
 
     //Модальное окно
-    //Boolean tracked variable to indicate if modal is open or not default value is false as modal is closed when page is loaded
     @track isModalOpen = false;
+
     openModal() {
         this.isModalOpen = true;
     }
+
     closeModal() {
         this.isModalOpen = false;
     }
+
     submitDetails() {
         this.isModalOpen = false;
+    }
+
+    //изменение статуса на New
+    handleSubmit(event) {
+        event.preventDefault(); // stop the form from submitting
+        const fields = event.detail.fields;
+
+        fields.Status__c = 'NEW';
+        this.template.querySelector('lightning-record-edit-form').submit(fields);
+    }
+
+    handleSuccess(event) {
+        const payload = event.detail;
+        console.log(JSON.stringify(payload));
+
+        const updatedRecord = event.detail.id;
+        console.log('onsuccess: ', updatedRecord);
     }
 
     // handleChange(event){
@@ -113,18 +186,37 @@ export default class VacationRequest extends LightningElement {
     //     return this._greeting.toUpperCase();
     // }
 
+    //удаление запроса
+    @api requestList;
 
-    @api requests;
-    @track error;
-    //Обработка результатов по получению списка request
-    handleLoad(){
-        getRequestList()
+    deleteRequest(event) {
+        let requestId = event.target.value;
+        deleteRequest(requestId)
             .then(result => {
-                this.requests = result;
-            })
-            .catch(error => {
-                this.error = error;
+                this.requestList = result;
+                // console.log(this.requestList.Status__c);
             });
+
+
+        deleteRecord(requestId)
+            .then(() => {
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Success',
+                        message: 'Request deleted successfully',
+                        variant: 'success'
+                    })
+                );
+
+                for (let req in this.requestList) {
+                    if (this.requestList[req].Id === requestId) {
+                        this.requestList.splice(req, 1);
+                        break;
+                    }
+                }
+            })
+
+
     }
 
 }

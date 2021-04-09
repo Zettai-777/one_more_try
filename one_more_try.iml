@@ -22,10 +22,12 @@
     <selectedComponentNames>
       <SelectedComponentNamesPersistedState type="CUSTOM_APPLICATION" selectAll="true" />
       <SelectedComponentNamesPersistedState type="APEX_TEST_SUITE" selectAll="true" />
+      <SelectedComponentNamesPersistedState type="CONNECTED_APP" selectAll="true" />
       <SelectedComponentNamesPersistedState type="CUSTOM_PERMISSION" selectAll="true" />
       <SelectedComponentNamesPersistedState type="CALL_CENTER" selectAll="true" />
       <SelectedComponentNamesPersistedState type="REMOTE_SITE_SETTINGS" selectAll="true" />
       <SelectedComponentNamesPersistedState type="EXTERNAL_DATA_SOURCE" selectAll="true" />
+      <SelectedComponentNamesPersistedState type="FLEXI_PAGE" selectAll="true" />
       <SelectedComponentNamesPersistedState type="LAYOUT" selectAll="true" />
       <SelectedComponentNamesPersistedState type="WORKFLOW" selectAll="true" />
       <SelectedComponentNamesPersistedState type="NETWORK" selectAll="true" />
@@ -42,6 +44,7 @@
       <SelectedComponentNamesPersistedState type="POST_TEMPLATE" selectAll="true" />
       <SelectedComponentNamesPersistedState type="CUSTOM_LABELS" selectAll="true" />
       <SelectedComponentNamesPersistedState type="APEX_PAGE" selectAll="true" />
+      <SelectedComponentNamesPersistedState type="ROLE" selectAll="true" />
       <SelectedComponentNamesPersistedState type="LIGHTNING_BUNDLE" selectAll="true" />
       <SelectedComponentNamesPersistedState type="TRANSLATIONS" selectAll="true" />
       <SelectedComponentNamesPersistedState type="STANDARD_VALUE_SET" selectAll="true" />
@@ -82,14 +85,14 @@
       <RetrieveComponentTreeNodePersistedState componentType="Community" />
       <RetrieveComponentTreeNodePersistedState componentType="CommunityTemplateDefinition" />
       <RetrieveComponentTreeNodePersistedState componentType="CommunityThemeDefinition" />
-      <RetrieveComponentTreeNodePersistedState componentType="ConnectedApp" />
+      <RetrieveComponentTreeNodePersistedState componentType="ConnectedApp" isChecked="true" />
       <RetrieveComponentTreeNodePersistedState componentType="CustomMetadata" isChecked="true" />
       <RetrieveComponentTreeNodePersistedState componentType="CustomObjectTranslation" isChecked="true" />
       <RetrieveComponentTreeNodePersistedState componentType="CustomPermission" isChecked="true" />
       <RetrieveComponentTreeNodePersistedState componentType="CustomSite" />
       <RetrieveComponentTreeNodePersistedState componentType="Document" />
       <RetrieveComponentTreeNodePersistedState componentType="EmailTemplate" />
-      <RetrieveComponentTreeNodePersistedState componentType="FlexiPage" />
+      <RetrieveComponentTreeNodePersistedState componentType="FlexiPage" isChecked="true" />
       <RetrieveComponentTreeNodePersistedState componentType="FlowDefinition" />
       <RetrieveComponentTreeNodePersistedState componentType="GlobalValueSet" isChecked="true" />
       <RetrieveComponentTreeNodePersistedState componentType="GlobalValueSetTranslation" isChecked="true" />
@@ -107,7 +110,7 @@
       <RetrieveComponentTreeNodePersistedState componentType="RemoteSiteSetting" isChecked="true" />
       <RetrieveComponentTreeNodePersistedState componentType="Report" isChecked="true" />
       <RetrieveComponentTreeNodePersistedState componentType="ReportType" isChecked="true" />
-      <RetrieveComponentTreeNodePersistedState componentType="Role" />
+      <RetrieveComponentTreeNodePersistedState componentType="Role" isChecked="true" />
       <RetrieveComponentTreeNodePersistedState componentType="Settings" isChecked="true" />
       <RetrieveComponentTreeNodePersistedState componentType="SharingRules" />
       <RetrieveComponentTreeNodePersistedState componentType="SharingSet" />
