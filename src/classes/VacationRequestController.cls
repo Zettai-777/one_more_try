@@ -1,4 +1,4 @@
-public with sharing class VacationRequestController {
+	public with sharing class VacationRequestController {
 
 	public String userName{
 		get; set;
@@ -18,10 +18,17 @@ public with sharing class VacationRequestController {
 	}
 
 	@AuraEnabled(cacheable = false)
-	public static List<Vacation_Request__c> deleteRequest(String deletedId){
-		List<Vacation_Request__c> requestList = [SELECT Id FROM Vacation_Request__c WHERE Id =: deletedId];
-//		delete o;
+	public static List<Vacation_Request__c> getDeletedRequestList(String deletedId){
+		List<Vacation_Request__c> requestList = [SELECT Id, Status__c FROM Vacation_Request__c WHERE Id =: deletedId];
 		return requestList;
+	}
+
+	@AuraEnabled(cacheable = false)
+	public static Vacation_Request__c updateStatusField(String updatedId){
+		Vacation_Request__c request = [SELECT Id, Name, Status__c FROM Vacation_Request__c WHERE Id =:updatedId LIMIT 1];
+//		request.Status__c = 'Submitted';
+//		update request;
+		return request;
 	}
 
 	//	@AuraEnabled(cacheable = false)

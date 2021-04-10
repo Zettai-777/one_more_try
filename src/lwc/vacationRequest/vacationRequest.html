@@ -72,7 +72,8 @@
                                 <template if:true={requests}>
 
                                     <lightning-record-edit-form object-api-name="Vacation_Request__c"
-                                                                onerror={handleError} onsubmit={handleSubmit}>
+                                                                onerror={handleError} onsubmit={handleSubmit}
+                                                                >
                                         <lightning-messages>
                                             Some errors exists!
                                         </lightning-messages>
@@ -86,11 +87,6 @@
                                         <lightning-input-field field-name="EndDate__c">
                                         </lightning-input-field>
 
-                                        <!--                                    <lightning-input-field field-name="Manager__c" value={}>-->
-                                        <!--                                    </lightning-input-field>-->
-                                        <!--                                    <input hidden="hidden" value={manager} onchange={managerCheck}></input>-->
-                                        <!--                                    <lightning-input-field field-name="Manager__c" value={manager} onchange={managerCheck}>-->
-                                        <!--                                    </lightning-input-field>-->
                                         <lightning-button
                                                 class="slds-m-top_small"
                                                 type="submit"
@@ -129,15 +125,21 @@
 
                             <lightning-button-group>
                                 <lightning-button label="Approve"></lightning-button>
-                                <lightning-button label="Submit" icon-name="utility:save"></lightning-button>
 
                                 <template if:true={myVacations}>
+                                    <lightning-button label="Submit" icon-name="utility:save"
+                                                      onclick={changeStatus}
+                                                      value={request.Id}>
 
+                                    </lightning-button>
+                                </template>
+
+                                <template if:true={myVacations}>
                                     <lightning-button label="Remove" variant="destructive"
-                                                      value={request.Id} onclick={deleteRequest}
+                                                      value={request.Id} onclick={deleteRequestFromDB}
+                                                      disabled={isDeleteButtonDisabled}
                                                       icon-name="utility:delete">
                                     </lightning-button>
-
                                 </template>
 
                             </lightning-button-group>
