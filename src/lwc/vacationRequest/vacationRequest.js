@@ -11,15 +11,8 @@ import getManagerInformation from '@salesforce/apex/ManagerDetails.getManagerInf
 import updateStatusField from '@salesforce/apex/VacationRequestController.updateStatusField';
 import Id from '@salesforce/user/Id';
 
-import getFields from '@salesforce/apex/VacationRequestController.getRequestList';
-import USER_ManagerId from '@salesforce/schema/User';
-// import Vacation_Request_Manager__c from '@salesforce/schema/Vacation_Request_c'
+
 export default class VacationRequest extends LightningElement {
-
-    // @track _greeting;
-    // @track columns;
-
-
     userId = Id;
     @track user;
     @track error;
@@ -86,6 +79,7 @@ export default class VacationRequest extends LightningElement {
 
     requestClicked(event){
         const requestId = event.detail;
+        // this.requests =
     }
 
 
@@ -303,43 +297,43 @@ export default class VacationRequest extends LightningElement {
 
 
 
-    // @wire(updateStatusField,{updatedId, })
-    @track updatedRequest
-    // @track submittedRequest
-    changeStatus(event){
-        let updatedId = event.target.value;
-        updateStatusField(updatedId)
-            .then(data => {
-                this.updatedRequest = data;
-            });
-        let recordInput = {
-            apiName: 'VacationRequest__c',
-            fields: {
-                Status__c: 'Submitted'
-            }
-        }
-        updateRecord(recordInput)
-            .then(() => {
-            return refreshApex(this.updatedRequest);
-        })
-        // alert(updatedId);
-        // this.updatedRequest = updateStatusField(updatedId);
-        // alert(this.updatedRequest.Id);
-        // getDeletedRequestList(requestId)
-        //     .then((res) =>{
-        //         this.submittedRequest = res;
-        //
-        //         // this.submittedRequest[0].fields.Status__c = 'Submitted';
-        //     })
-        // event.preventDefault();
-        // let fields = event.details.fields;
-        // fields.Status__c = 'Submitted';
-        // this.template.querySelector('lightning-button-group').submit(fields);
-
-        // for (let req in this.submittedRequest){
-        //     alert(this.submittedRequest[req].fields.Id)
-        // }
-    }
+    // // @wire(updateStatusField,{updatedId, })
+    // @track updatedRequest
+    // // @track submittedRequest
+    // changeStatus(event){
+    //     let updatedId = event.target.value;
+    //     updateStatusField(updatedId)
+    //         .then(data => {
+    //             this.updatedRequest = data;
+    //         });
+    //     let recordInput = {
+    //         apiName: 'VacationRequest__c',
+    //         fields: {
+    //             Status__c: 'Submitted'
+    //         }
+    //     }
+    //     updateRecord(recordInput)
+    //         .then(() => {
+    //         return refreshApex(this.updatedRequest);
+    //     })
+    //     // alert(updatedId);
+    //     // this.updatedRequest = updateStatusField(updatedId);
+    //     // alert(this.updatedRequest.Id);
+    //     // getDeletedRequestList(requestId)
+    //     //     .then((res) =>{
+    //     //         this.submittedRequest = res;
+    //     //
+    //     //         // this.submittedRequest[0].fields.Status__c = 'Submitted';
+    //     //     })
+    //     // event.preventDefault();
+    //     // let fields = event.details.fields;
+    //     // fields.Status__c = 'Submitted';
+    //     // this.template.querySelector('lightning-button-group').submit(fields);
+    //
+    //     // for (let req in this.submittedRequest){
+    //     //     alert(this.submittedRequest[req].fields.Id)
+    //     // }
+    // }
 
 
 

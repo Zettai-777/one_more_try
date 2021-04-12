@@ -15,12 +15,11 @@
                 </lightning-button>
             </template>
 
-            <template if:true={myVacations}>
-                <lightning-button label="Remove" variant="destructive"
-                                  value={request.Id} onclick={clickHandler}
-                                  disabled={isDeleteButtonDisabled}
-                                  icon-name="utility:delete">
-                </lightning-button>
+            <template if:true={isRemovable}>
+                    <lightning-button label="Remove" variant="destructive"
+                                      value={request.Id} onclick={deleteRequestFromDB}
+                                      icon-name="utility:delete">
+                    </lightning-button>
             </template>
 
         </lightning-button-group>
