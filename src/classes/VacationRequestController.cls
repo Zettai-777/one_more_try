@@ -13,7 +13,7 @@
 		return [
 				SELECT Name, CreatedById, RequestType__c, StartDate__c, EndDate__c,
 						WorkingDays__c, Manager__c, Status__c
-				FROM Vacation_Request__c
+				FROM Vacation_Request__c LIMIT 10
 		];
 	}
 

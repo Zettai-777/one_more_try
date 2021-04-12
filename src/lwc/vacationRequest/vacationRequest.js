@@ -37,15 +37,13 @@ export default class VacationRequest extends LightningElement {
         }
     }
 
-    //постоянное обновление информации на страничке
-    connectedCallback() {
-        this.handleLoad();
-    }
+
+
+
 
 
     // @wire(getRequestList, {})
-    @api
-    requests;
+
 
     // wiredRequests({error, data}){
     //     if(data) {
@@ -56,18 +54,39 @@ export default class VacationRequest extends LightningElement {
     // }
     // @track error;
     // Обработка результатов по получению списка request
+
+    //постоянное обновление информации на страничке
+    connectedCallback() {
+        this.handleLoad();
+    }
+
+    renderedCallback() {
+        this.handleLoad();
+    }
+
+    // disconnectedCallback() {
+    //     this.handleLoad();
+    // }
+
+    @api requests;
     handleLoad() {
-        // return refreshApex(this.requests);
         getRequestList()
             .then(result => {
                 this.requests = result;
-                // return refreshApex(this.requests);
+            }).catch(error => {
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Error',
+                        message: 'Something going wrong with loading of requests',
+                        variant: 'error'
+                    })
+                )
             });
-            // .catch(error => {
-            //     this.error = error;
-            // });
     }
 
+    requestClicked(event){
+        const requestId = event.detail;
+    }
 
 
     //уведомление об отсутствии менеджера у текущего пользователя
@@ -134,6 +153,7 @@ export default class VacationRequest extends LightningElement {
             }
         }
     }
+
 
 
     // clickedButtonLabel;
@@ -222,64 +242,64 @@ export default class VacationRequest extends LightningElement {
 
     // }
 
-    //удаление запроса
-    @track requestList;
-    @track isDeleteButtonDisabled;
-    deleteRequestFromDB(event) {
-        let requestId = event.target.value;
-        getDeletedRequestList(requestId)
-            .then(res => {
-                this.requestList = res;
-                // for(let i=0; i < this.requestList.length; i++){
-                //     if(this.requestList[i].Status__c === 'New'){
-                //         this.isDeleteButtonDisabled = true;
-                //     return this.isDeleteButtonDisabled;
-                //     break;
-                //     }
-                // }
-                // console.log(this.requestList.Status__c);
-            });
-
-        // this.checkTypeOfStatus(event);
-        // if(this.isDeleteButtonDisabled === true){
-        //     return;
-        // }
-
-
-        // if(this.requestList[0].Status__c === 'New'){
-        //     this.isDeleteButtonDisabled = true;
-        // }
-        // this.checkTypeOfStatus(event);
-
-        deleteRecord(requestId)
-            .then(() => {
-                if(this.isDeleteButtonDisabled == true){
-                    event.preventDefault();
-                    this.dispatchEvent(
-                        new ShowToastEvent({
-                            title: 'Warning',
-                            message: 'You can’t delete this request!',
-                            variant: 'warning'
-                        })
-                    );
-                }else {
-                    this.dispatchEvent(
-                        new ShowToastEvent({
-                            title: 'Success',
-                            message: 'Request deleted successfully',
-                            variant: 'success'
-                        })
-                    );
-                    for (let req in this.requestList) {
-                        if (this.requestList[req].Id === requestId && this.requestList[req].Status__c === 'New') {
-                            this.requestList.splice(req, 1);
-                            break;
-                        }
-                    }
-                }
-
-            })
-    }
+    // //удаление запроса
+    // @track requestList;
+    // @track isDeleteButtonDisabled;
+    // deleteRequestFromDB(event) {
+    //     let requestId = event.target.value;
+    //     getDeletedRequestList(requestId)
+    //         .then(res => {
+    //             this.requestList = res;
+    //             // for(let i=0; i < this.requestList.length; i++){
+    //             //     if(this.requestList[i].Status__c === 'New'){
+    //             //         this.isDeleteButtonDisabled = true;
+    //             //     return this.isDeleteButtonDisabled;
+    //             //     break;
+    //             //     }
+    //             // }
+    //             // console.log(this.requestList.Status__c);
+    //         });
+    //
+    //     // this.checkTypeOfStatus(event);
+    //     // if(this.isDeleteButtonDisabled === true){
+    //     //     return;
+    //     // }
+    //
+    //
+    //     // if(this.requestList[0].Status__c === 'New'){
+    //     //     this.isDeleteButtonDisabled = true;
+    //     // }
+    //     // this.checkTypeOfStatus(event);
+    //
+    //     deleteRecord(requestId)
+    //         .then(() => {
+    //             if(this.isDeleteButtonDisabled == true){
+    //                 event.preventDefault();
+    //                 this.dispatchEvent(
+    //                     new ShowToastEvent({
+    //                         title: 'Warning',
+    //                         message: 'You can’t delete this request!',
+    //                         variant: 'warning'
+    //                     })
+    //                 );
+    //             }else {
+    //                 this.dispatchEvent(
+    //                     new ShowToastEvent({
+    //                         title: 'Success',
+    //                         message: 'Request deleted successfully',
+    //                         variant: 'success'
+    //                     })
+    //                 );
+    //                 for (let req in this.requestList) {
+    //                     if (this.requestList[req].Id === requestId && this.requestList[req].Status__c === 'New') {
+    //                         this.requestList.splice(req, 1);
+    //                         break;
+    //                     }
+    //                 }
+    //             }
+    //
+    //         })
+    // }
 
 
 
