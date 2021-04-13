@@ -2,10 +2,16 @@
     <p>
         | {user.Name} | {request.RequestType__c} |-->
         {request.StartDate__c} - {request.EndDate__c} ({request.WorkingDays__c} days)-
-        <template if:true={manager}>{manager.Name}</template>
+        <template if:true={current_manager}>{current_manager.Name}</template>
         | {request.Status__c} |
         <lightning-button-group>
-            <lightning-button label="Approve"></lightning-button>
+            <template if:false={isApprovable}>
+                <lightning-button label="Approve"
+                                  onclick={approveRequest}
+                                  value={request.Id}>
+
+                </lightning-button>
+            </template>
 
             <template if:true={myVacations}>
                 <lightning-button label="Submit" icon-name="utility:save"
@@ -16,11 +22,11 @@
             </template>
 
             <template if:true={isRemovable}>
-                    <lightning-button label="Remove" icon-name="utility:delete"
-                                      variant="destructive"
-                                      onclick={deleteRequestFromDB}
-                                      value={request.Id}>
-                    </lightning-button>
+                <lightning-button label="Remove" icon-name="utility:delete"
+                                  variant="destructive"
+                                  onclick={deleteRequestFromDB}
+                                  value={request.Id}>
+                </lightning-button>
             </template>
 
         </lightning-button-group>

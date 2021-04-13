@@ -9,6 +9,7 @@ import getDeletedRequestList from '@salesforce/apex/VacationRequestController.ge
 import getUserDetails from '@salesforce/apex/UserDetails.getUserDetails';
 import getManagerInformation from '@salesforce/apex/ManagerDetails.getManagerInformation';
 import updateStatusField from '@salesforce/apex/VacationRequestController.updateStatusField';
+import updateStatusFieldToApproved from '@salesforce/apex/VacationRequestController.updateStatusFieldToApproved';
 import Id from '@salesforce/user/Id';
 
 
@@ -77,10 +78,10 @@ export default class VacationRequest extends LightningElement {
             });
     }
 
+    // обновление статуса у запроса на Submitted
     requestClicked(event){
         const updRequestId = event.detail;
-        // alert(updRequestId);
-        updateStatusField({updatedId: updRequestId})
+        updateStatusField({updatedId: updRequestId, typeOfRequest: 'Submitted'})
             .then(result => {
                 this.requests = result;
             }).catch(error => {
@@ -92,23 +93,24 @@ export default class VacationRequest extends LightningElement {
                     })
                 )
         });
-        // alert(requestId);
-        // let req = updateStatusField(updRequestId);
-        // updateRecord(req);
-        // for(let req of this.requests){
-        //     if(req.Id === requestId){
-        //         // alert(req.Status__c);
-        //         req.Status__c = 'Submitted';
-        //         alert(req.Status__c);
-        //         alert(req);
-        //         break;
-        //     }
-        // }
-        // this.requests =
-        // for(let req of this.requests){
-        //     alert(req.Status__c);
-        // }
     }
+
+    requestApproved(event){
+        const updRequestId = event.detail;
+        updateStatusField({updatedId: updRequestId, typeOfRequest: 'Approved'})
+            .then(result => {
+                this.requests = result;
+            }).catch(error => {
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Error',
+                    message: 'Update failed!',
+                    variant: 'error'
+                })
+            )
+        });
+    }
+
 
 
     //уведомление об отсутствии менеджера у текущего пользователя
@@ -125,24 +127,16 @@ export default class VacationRequest extends LightningElement {
         }
     }
 
-    title = 'Warning';
-    message = 'The Manager for current user isn’t specified';
-    variant = 'warning';
-
     managerCheck() {
         if (this.manager == null) {
-            this.showToast(this.title, this.message, this.variant);
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Warning',
+                    message: 'The Manager for current user isn’t specified',
+                    variant: 'warning'
+                }),
+            );
         }
-    }
-
-    showToast(title, message, variant) {
-        this.dispatchEvent(
-            new ShowToastEvent({
-                title: title,
-                message: message,
-                variant: variant,
-            }),
-        );
     }
 
 
@@ -153,20 +147,14 @@ export default class VacationRequest extends LightningElement {
     handleCheckBox(event) {
         this.flag = event.target.checked;
         if (this.flag) {
-            // this.myVacations=true;
             this.checkEqualsOfCurUserIdAndCreatedId()
         } else {
             this.myVacations = true;
         }
-        // this.myVacations = event.target.checked;
-
-        // let checkbox = this.template.querySelector('[data-id="checkbox"]')
-        // checkbox[0].checked = event.target.checked;
     }
 
     checkEqualsOfCurUserIdAndCreatedId() {
         for (let request of this.requests) {
-            // alert(request.CreatedById + this.userId);
             if (this.user.Id !== request.CreatedById) {
                 this.myVacations = false;
                 break;
@@ -205,17 +193,32 @@ export default class VacationRequest extends LightningElement {
         const fields = event.detail.fields;
 
         fields.Status__c = 'New';
-        fields.Manager__c = this.manager.Id;
+        if(this.manager != null){
+            fields.Manager__c = this.manager.Id;
+        }
         // console.log(this.manager);
         this.template.querySelector('lightning-record-edit-form').submit(fields);
+
+        // if(event.error.isEmpty()){
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Success',
+                    message: 'Request successfully added',
+                    variant: 'success'
+                })
+            );
+        // }
+
+    }
+
+    myHandleError(event){
         this.dispatchEvent(
             new ShowToastEvent({
-                title: 'Success',
-                message: 'Request successfully added',
-                variant: 'success'
+                title: 'Error',
+                message: event.message,
+                variant: 'error'
             })
         );
-
     }
 
     // handleSuccess(event) {

@@ -11,7 +11,7 @@ public with sharing class VacationRequestController {
 		return [
 				SELECT Name, CreatedById, RequestType__c, StartDate__c, EndDate__c,
 						WorkingDays__c, Manager__c, Status__c
-				FROM Vacation_Request__c LIMIT 10
+				FROM Vacation_Request__c LIMIT 50
 		];
 	}
 
@@ -22,7 +22,7 @@ public with sharing class VacationRequestController {
 	}
 
 	@AuraEnabled(cacheable = false)
-	public static List<Vacation_Request__c> updateStatusField(String updatedId){
+	public static List<Vacation_Request__c> updateStatusField(String updatedId, String typeOfRequest){
 		List<Vacation_Request__c> requests = [
 				SELECT Name, CreatedById, RequestType__c, StartDate__c, EndDate__c,
 						WorkingDays__c, Manager__c, Status__c
@@ -30,20 +30,12 @@ public with sharing class VacationRequestController {
 		List<Vacation_Request__c> updatedRequests = new List<Vacation_Request__c>();
 		for(Vacation_Request__c request : requests){
 			if(request.Id.equals(updatedId)){
-				request.Status__c = 'Submitted';
-//				System.debug(updatedId);
-//				break;
+				request.Status__c = typeOfRequest;
 			}
 			updatedRequests.add(request);
 		}
  		update updatedRequests;
-//		List<Vacation_Request__c> updatedRequests = new List<Vacation_Request__c>();
-//		requests[0].Status__c = 'Submitted';
-//		updatedRequests.add(requests[0]);
-//		update updatedRequests;
-// 		System.debug(updatedRequests[0].Status__c);
 		return updatedRequests;
 	}
-
 
 }

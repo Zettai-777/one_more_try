@@ -72,8 +72,7 @@
                                 <template if:true={requests}>
 
                                     <lightning-record-edit-form object-api-name="Vacation_Request__c"
-                                                                onerror={handleError} onsubmit={handleSubmit}
-                                                                >
+                                                                onerror={myHandleError} onsubmit={handleSubmit}>
                                         <lightning-messages>
                                             Some errors exists!
                                         </lightning-messages>
@@ -118,7 +117,9 @@
                         <li class="slds-item" if:true={myVacations} key={request.Id}>
                             <c-get-one-request-item key={request.id} request={request}
                                                     user={user} manager={manager}
-                                                    onclicked={requestClicked}>
+                                                    current_manager={current_manager}
+                                                    onclicked={requestClicked}
+                                                    onapproved={requestApproved}>
                             </c-get-one-request-item>
                         </li>
                             <!--                    <div key={request.Id} if:true={myVacations}>-->
