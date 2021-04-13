@@ -16,9 +16,10 @@
             </template>
 
             <template if:true={isRemovable}>
-                    <lightning-button label="Remove" variant="destructive"
-                                      value={request.Id} onclick={deleteRequestFromDB}
-                                      icon-name="utility:delete">
+                    <lightning-button label="Remove" icon-name="utility:delete"
+                                      variant="destructive"
+                                      onclick={deleteRequestFromDB}
+                                      value={request.Id}>
                     </lightning-button>
             </template>
 

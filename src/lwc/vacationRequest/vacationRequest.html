@@ -116,7 +116,10 @@
                     </li>
                     <template for:each={requests} for:item="request">
                         <li class="slds-item" if:true={myVacations} key={request.Id}>
-                            <c-get-one-request-item key={request.id} request={request} user={user} manager={manager} onclicked={requestClicked}></c-get-one-request-item>
+                            <c-get-one-request-item key={request.id} request={request}
+                                                    user={user} manager={manager}
+                                                    onclicked={requestClicked}>
+                            </c-get-one-request-item>
                         </li>
                             <!--                    <div key={request.Id} if:true={myVacations}>-->
                         <!--                        <p>===============================</p>-->

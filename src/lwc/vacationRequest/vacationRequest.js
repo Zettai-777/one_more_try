@@ -78,8 +78,36 @@ export default class VacationRequest extends LightningElement {
     }
 
     requestClicked(event){
-        const requestId = event.detail;
+        const updRequestId = event.detail;
+        // alert(updRequestId);
+        updateStatusField({updatedId: updRequestId})
+            .then(result => {
+                this.requests = result;
+            }).catch(error => {
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Error',
+                        message: 'Update failed!',
+                        variant: 'error'
+                    })
+                )
+        });
+        // alert(requestId);
+        // let req = updateStatusField(updRequestId);
+        // updateRecord(req);
+        // for(let req of this.requests){
+        //     if(req.Id === requestId){
+        //         // alert(req.Status__c);
+        //         req.Status__c = 'Submitted';
+        //         alert(req.Status__c);
+        //         alert(req);
+        //         break;
+        //     }
+        // }
         // this.requests =
+        // for(let req of this.requests){
+        //     alert(req.Status__c);
+        // }
     }
 
 
@@ -140,7 +168,7 @@ export default class VacationRequest extends LightningElement {
         for (let request of this.requests) {
             // alert(request.CreatedById + this.userId);
             if (this.user.Id !== request.CreatedById) {
-                this.myVacations = null;
+                this.myVacations = false;
                 break;
             } else {
                 this.myVacations = true;
