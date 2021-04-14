@@ -33,10 +33,6 @@
     <!--  Приложение  -->
     <lightning-card title="Vacation Requests" icon-name="action:goal">
         <div class="slds-m-around_medium slds-size_3-of-4">
-            <!--            <p class="slds-m-bottom_small">-->
-            <!--                <lightning-button label="Load requests" onclick={handleLoad}></lightning-button>-->
-            <!--            </p>-->
-
 
             <div class="slds-clearfix">
                 <!--    Фильтрация моих записей        -->
@@ -51,6 +47,7 @@
                         variant="brand" label="Add Request"
                         title="Primary action" onclick={openModal}>
                 </lightning-button>
+
                 <!--        Модальное окно        -->
                 <template if:true={isModalOpen}>
                     <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-content-id-1"
@@ -108,69 +105,22 @@
 
             <!--    Отображение имеющихся requests      -->
             <div class="slds-clearfix">
-
                 <ul class="slds-has-dividers_around-space slds-p-top_small">
-                    <li class="slds-item">
-                        Request Owner | Vacation Type | Start Date - End Date (Working days) | Manager | Status
+                    <li class="slds-item" style="background-color: bisque; align-self: center">
+                        <p style="align-content: center">||  Request Owner  || Vacation Type || Start Date - End Date (Working days) - Manager || Status ||</p>
                     </li>
                     <template for:each={requests} for:item="request">
                         <li class="slds-item" if:true={myVacations} key={request.Id}>
                             <c-get-one-request-item key={request.id} request={request}
                                                     user={user} manager={manager}
                                                     current_manager={current_manager}
-                                                    onclicked={requestClicked}
+                                                    onsubmitted={requestSubmitted}
                                                     onapproved={requestApproved}>
                             </c-get-one-request-item>
                         </li>
-                            <!--                    <div key={request.Id} if:true={myVacations}>-->
-                        <!--                        <p>===============================</p>-->
-<!--                        <li class="slds-item" if:true={myVacations} key={request.Id}>-->
-<!--                            | {user.Name} | {request.RequestType__c} |-->
-<!--                            {request.StartDate__c} - {request.EndDate__c} ({request.WorkingDays__c} days)- -->
-<!--                            <template if:true={manager}>{manager.Name}</template>-->
-<!--                            | {request.Status__c} |-->
-
-<!--                            <lightning-button-group>-->
-<!--                                <lightning-button label="Approve"></lightning-button>-->
-
-<!--                                <template if:true={myVacations}>-->
-<!--                                    <lightning-button label="Submit" icon-name="utility:save"-->
-<!--                                                      onclick={changeStatus}-->
-<!--                                                      value={request.Id}>-->
-
-<!--                                    </lightning-button>-->
-<!--                                </template>-->
-
-<!--                                <template if:true={myVacations}>-->
-<!--                                    <lightning-button label="Remove" variant="destructive"-->
-<!--                                                      value={request.Id} onclick={deleteRequestFromDB}-->
-<!--                                                      disabled={isDeleteButtonDisabled}-->
-<!--                                                      icon-name="utility:delete">-->
-<!--                                    </lightning-button>-->
-<!--                                </template>-->
-
-<!--                            </lightning-button-group>-->
-
-<!--                        </li>-->
-                        <!--                    </div>-->
                     </template>
                 </ul>
-
             </div>
-
-            <!--            </template>-->
-            <!--            <template if:true={error}>-->
-            <!--                <c-error-panel errors={error}></c-error-panel>-->
-            <!--            </template>-->
-
-
-            <!--     Проверка возможностей       -->
-            <!--            <template if:true={_greeting}>-->
-            <!--                <lightning-input label="Name" value={_greeting} onchange={handleChange}></lightning-input>-->
-            <!--                <p>Hello, {upperCasedGreeting}!</p>-->
-            <!--            </template>-->
-
-
         </div>
     </lightning-card>
 </template>

@@ -1,11 +1,11 @@
 <template>
     <p>
-        | {user.Name} | {request.RequestType__c} |-->
+        || {user.Name} || {request.RequestType__c} ||
         {request.StartDate__c} - {request.EndDate__c} ({request.WorkingDays__c} days)-
         <template if:true={current_manager}>{current_manager.Name}</template>
-        | {request.Status__c} |
-        <lightning-button-group>
-            <template if:false={isApprovable}>
+        || {request.Status__c} ||
+        <lightning-button-group class="slds-float_right">
+            <template if:true={isApprovable}>
                 <lightning-button label="Approve"
                                   onclick={approveRequest}
                                   value={request.Id}>
@@ -30,35 +30,5 @@
             </template>
 
         </lightning-button-group>
-
     </p>
-
-    <!--    <li class="slds-item" if:true={myVacations} key={request.Id}>-->
-    <!--        | {user.Name} | {request.RequestType__c} |-->
-    <!--        {request.StartDate__c} - {request.EndDate__c} ({request.WorkingDays__c} days)- -->
-    <!--        <template if:true={manager}>{manager.Name}</template>-->
-    <!--        | {request.Status__c} |-->
-
-    <!--        <lightning-button-group>-->
-    <!--            <lightning-button label="Approve"></lightning-button>-->
-
-    <!--            <template if:true={myVacations}>-->
-    <!--                <lightning-button label="Submit" icon-name="utility:save"-->
-    <!--                                  onclick={changeStatus}-->
-    <!--                                  value={request.Id}>-->
-
-    <!--                </lightning-button>-->
-    <!--            </template>-->
-
-    <!--            <template if:true={myVacations}>-->
-    <!--                <lightning-button label="Remove" variant="destructive"-->
-    <!--                                  value={request.Id} onclick={clickHandler}-->
-    <!--                                  disabled={isDeleteButtonDisabled}-->
-    <!--                                  icon-name="utility:delete">-->
-    <!--                </lightning-button>-->
-    <!--            </template>-->
-
-    <!--        </lightning-button-group>-->
-
-    <!--    </li>-->
 </template>

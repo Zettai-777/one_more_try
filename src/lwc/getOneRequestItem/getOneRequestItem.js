@@ -4,8 +4,6 @@ import {ShowToastEvent} from 'lightning/platformShowToastEvent';
 import getDeletedRequestList from '@salesforce/apex/VacationRequestController.getDeletedRequestList';
 import getManagerInformation from '@salesforce/apex/ManagerDetails.getManagerInformation';
 
-import updateStatusField from '@salesforce/apex/VacationRequestController.updateStatusField';
-import {updateRecord} from 'lightning/uiRecordApi';
 
 export default class GetOneRequestItem extends LightningElement {
     @api request;
@@ -14,18 +12,12 @@ export default class GetOneRequestItem extends LightningElement {
     @track myVacations = true;
 
 
-    // clickHandler(event) {
-    //     event.preventDefault();
-    //     const clickedEvent = new CustomEvent('clicked', {detail: this.request.Id});
-    //     this.dispatchEvent(clickedEvent);
-    // }
-
     // проверка статуса запроса и принадлежности запроса пользователю
     get isRemovable() {
         // console.log("ManagerId ",this.manager.Id);
         return this.request.Status__c === 'New' && this.request.CreatedById === this.user.Id;
     }
-
+    // проверка того, что текущий пользователь является менеджером запроса
     get isApprovable(){
         return this.request.Manager__c === this.user.Id;
     }
@@ -44,8 +36,6 @@ export default class GetOneRequestItem extends LightningElement {
                     variant: 'success'
                 })
             )
-
-            // console.log(this.request.Status__c);
         }else {
             this.dispatchEvent(
                 new ShowToastEvent({
@@ -92,7 +82,7 @@ export default class GetOneRequestItem extends LightningElement {
     changeStatus(event){
         if(this.request.Status__c === 'New' && this.request.CreatedById === this.user.Id){
             event.preventDefault();
-            const clickedEvent = new CustomEvent('clicked', {detail: this.request.Id});
+            const clickedEvent = new CustomEvent('submitted', {detail: this.request.Id});
             this.dispatchEvent(clickedEvent);
             this.dispatchEvent(
                 new ShowToastEvent({
@@ -101,8 +91,6 @@ export default class GetOneRequestItem extends LightningElement {
                     variant: 'success'
                 })
             )
-
-            // console.log(this.request.Status__c);
         }else {
             this.dispatchEvent(
                 new ShowToastEvent({
@@ -122,6 +110,7 @@ export default class GetOneRequestItem extends LightningElement {
     //     this.getCurrentManagerInfo();
     // }
 
+    // получение менеджера для текущего запроса
     @api current_manager
     getCurrentManagerInfo(){
         if(this.request.Manager__c == null){
@@ -132,9 +121,5 @@ export default class GetOneRequestItem extends LightningElement {
                     this.current_manager = result;
                 });
         }
-
-        // alert(this.current_manager.Name);
     }
-
-
 }

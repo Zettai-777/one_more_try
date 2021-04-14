@@ -9,49 +9,16 @@ import getDeletedRequestList from '@salesforce/apex/VacationRequestController.ge
 import getUserDetails from '@salesforce/apex/UserDetails.getUserDetails';
 import getManagerInformation from '@salesforce/apex/ManagerDetails.getManagerInformation';
 import updateStatusField from '@salesforce/apex/VacationRequestController.updateStatusField';
-import updateStatusFieldToApproved from '@salesforce/apex/VacationRequestController.updateStatusFieldToApproved';
 import Id from '@salesforce/user/Id';
 
 
 export default class VacationRequest extends LightningElement {
-    userId = Id;
-    @track user;
-    @track error;
-
-    @wire(getUserDetails, {
-        recId: '$userId'
-    })
-
-    //информация о текущем пользователе
-    wiredUser({error, data}) {
-        if (data) {
-            this.user = data;
-        } else if (error) {
-            this.error = error;
-        }
-    }
-
-
-
-
-
-
-    // @wire(getRequestList, {})
-
-
-    // wiredRequests({error, data}){
-    //     if(data) {
-    //         this.requests = data;
-    //     }else if (error){
-    //         this.error = error;
-    //     }
-    // }
-    // @track error;
-    // Обработка результатов по получению списка request
 
     //постоянное обновление информации на страничке
     connectedCallback() {
         this.handleLoad();
+        this.getCurrentUser();
+        // this.getCurrentUserManager();
     }
 
     renderedCallback() {
@@ -62,6 +29,21 @@ export default class VacationRequest extends LightningElement {
     //     this.handleLoad();
     // }
 
+
+    //информация о текущем пользователе
+    userId = Id;
+    @api user;
+    @track error;
+
+    getCurrentUser(){
+        getUserDetails({recId: this.userId})
+            .then(result => {
+                this.user = result;
+            });
+    }
+
+
+    //получение списка заявок
     @api requests;
     handleLoad() {
         getRequestList()
@@ -78,8 +60,9 @@ export default class VacationRequest extends LightningElement {
             });
     }
 
+
     // обновление статуса у запроса на Submitted
-    requestClicked(event){
+    requestSubmitted(event){
         const updRequestId = event.detail;
         updateStatusField({updatedId: updRequestId, typeOfRequest: 'Submitted'})
             .then(result => {
@@ -95,6 +78,8 @@ export default class VacationRequest extends LightningElement {
         });
     }
 
+
+    // обновление статуса у запроса на Approved
     requestApproved(event){
         const updRequestId = event.detail;
         updateStatusField({updatedId: updRequestId, typeOfRequest: 'Approved'})
@@ -112,9 +97,16 @@ export default class VacationRequest extends LightningElement {
     }
 
 
-
     //уведомление об отсутствии менеджера у текущего пользователя
-    @track manager
+    @api manager
+    // managerId = this.user.ManagerId;
+    // getCurrentUserManager(){
+    //     getManagerInformation({recMId: this.managerId})
+    //         .then(result => {
+    //             this.manager = result;
+    //         });
+    // }
+
     @wire(getManagerInformation, {
         recMId: '$user.ManagerId'
     })
@@ -165,13 +157,6 @@ export default class VacationRequest extends LightningElement {
     }
 
 
-
-    // clickedButtonLabel;
-    //
-    // handleClick(event) {
-    //     this.clickedButtonLabel = event.target.label;
-    // }
-
     //Модальное окно для добавления нового запроса
     @track isModalOpen = false;
 
@@ -187,6 +172,7 @@ export default class VacationRequest extends LightningElement {
         this.isModalOpen = false;
     }
 
+
     //изменение статуса запроса на New и установка в поле Manager полученного ранее значения
     handleSubmit(event) {
         event.preventDefault(); // stop the form from submitting
@@ -196,10 +182,10 @@ export default class VacationRequest extends LightningElement {
         if(this.manager != null){
             fields.Manager__c = this.manager.Id;
         }
-        // console.log(this.manager);
+
         this.template.querySelector('lightning-record-edit-form').submit(fields);
 
-        // if(event.error.isEmpty()){
+        // if(event.error.()){
             this.dispatchEvent(
                 new ShowToastEvent({
                     title: 'Success',
@@ -208,9 +194,9 @@ export default class VacationRequest extends LightningElement {
                 })
             );
         // }
-
     }
 
+    // обработка ошибок при сохранение новой заявки
     myHandleError(event){
         this.dispatchEvent(
             new ShowToastEvent({
@@ -220,152 +206,4 @@ export default class VacationRequest extends LightningElement {
             })
         );
     }
-
-    // handleSuccess(event) {
-    //     const payload = event.detail;
-    //     console.log(JSON.stringify(payload));
-    //
-    //     const updatedRecord = event.detail.id;
-    //     console.log('onsuccess: ', updatedRecord);
-    // }
-
-    // handleChange(event){
-    //     this._greeting = event.target.value;
-    // }
-    //
-    // get upperCasedGreeting() {
-    //     return this._greeting.toUpperCase();
-    // }
-
-
-    // checkTypeOfStatus(event){
-        // event.preventDefault();
-        // let requestId = event.target.value;
-        // const fields = event.detail.fields;
-        // if(fields.Status__c === 'New'){
-        //     this.isDeleteButtonDisabled = true;
-        // }
-        // getDeletedRequestList(requestId)
-        //     .then(res => {
-        //         this.requestList = res;
-        //     });
-
-        // for(let i=0; i < this.requestList.length; i++){
-        //     if(this.requestList[i].Status__c == 'New'){
-        //         this.isDeleteButtonDisabled = true;
-                // break;
-            // }
-        // }
-        // this.isDeleteButtonDisabled = true;
-        // this.template.querySelector('lightning-button').submit(fields)
-
-        // let requestId = event.target.value;
-        // getDeletedRequestList(requestId)
-        //     .then(res => {
-        //         this.requestList = res;
-        //     });
-
-    // }
-
-    // //удаление запроса
-    // @track requestList;
-    // @track isDeleteButtonDisabled;
-    // deleteRequestFromDB(event) {
-    //     let requestId = event.target.value;
-    //     getDeletedRequestList(requestId)
-    //         .then(res => {
-    //             this.requestList = res;
-    //             // for(let i=0; i < this.requestList.length; i++){
-    //             //     if(this.requestList[i].Status__c === 'New'){
-    //             //         this.isDeleteButtonDisabled = true;
-    //             //     return this.isDeleteButtonDisabled;
-    //             //     break;
-    //             //     }
-    //             // }
-    //             // console.log(this.requestList.Status__c);
-    //         });
-    //
-    //     // this.checkTypeOfStatus(event);
-    //     // if(this.isDeleteButtonDisabled === true){
-    //     //     return;
-    //     // }
-    //
-    //
-    //     // if(this.requestList[0].Status__c === 'New'){
-    //     //     this.isDeleteButtonDisabled = true;
-    //     // }
-    //     // this.checkTypeOfStatus(event);
-    //
-    //     deleteRecord(requestId)
-    //         .then(() => {
-    //             if(this.isDeleteButtonDisabled == true){
-    //                 event.preventDefault();
-    //                 this.dispatchEvent(
-    //                     new ShowToastEvent({
-    //                         title: 'Warning',
-    //                         message: 'You can’t delete this request!',
-    //                         variant: 'warning'
-    //                     })
-    //                 );
-    //             }else {
-    //                 this.dispatchEvent(
-    //                     new ShowToastEvent({
-    //                         title: 'Success',
-    //                         message: 'Request deleted successfully',
-    //                         variant: 'success'
-    //                     })
-    //                 );
-    //                 for (let req in this.requestList) {
-    //                     if (this.requestList[req].Id === requestId && this.requestList[req].Status__c === 'New') {
-    //                         this.requestList.splice(req, 1);
-    //                         break;
-    //                     }
-    //                 }
-    //             }
-    //
-    //         })
-    // }
-
-
-
-    // // @wire(updateStatusField,{updatedId, })
-    // @track updatedRequest
-    // // @track submittedRequest
-    // changeStatus(event){
-    //     let updatedId = event.target.value;
-    //     updateStatusField(updatedId)
-    //         .then(data => {
-    //             this.updatedRequest = data;
-    //         });
-    //     let recordInput = {
-    //         apiName: 'VacationRequest__c',
-    //         fields: {
-    //             Status__c: 'Submitted'
-    //         }
-    //     }
-    //     updateRecord(recordInput)
-    //         .then(() => {
-    //         return refreshApex(this.updatedRequest);
-    //     })
-    //     // alert(updatedId);
-    //     // this.updatedRequest = updateStatusField(updatedId);
-    //     // alert(this.updatedRequest.Id);
-    //     // getDeletedRequestList(requestId)
-    //     //     .then((res) =>{
-    //     //         this.submittedRequest = res;
-    //     //
-    //     //         // this.submittedRequest[0].fields.Status__c = 'Submitted';
-    //     //     })
-    //     // event.preventDefault();
-    //     // let fields = event.details.fields;
-    //     // fields.Status__c = 'Submitted';
-    //     // this.template.querySelector('lightning-button-group').submit(fields);
-    //
-    //     // for (let req in this.submittedRequest){
-    //     //     alert(this.submittedRequest[req].fields.Id)
-    //     // }
-    // }
-
-
-
 }
